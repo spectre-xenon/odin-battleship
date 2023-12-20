@@ -28,10 +28,31 @@ export default function Gameboard() {
     // Guard clauses
     if (hasShipAt(coords) === undefined) return false;
     if (hasShipAt(coords) === true) return false;
+    // Check that the surronding area is empty
+    const addFactor = axis === "x" ? 1 : 10;
+
+    if (axis === "x") {
+      if (hasShipAt(coords - 1) === true) return false;
+      if (hasShipAt(coords + length + 1) === true) return false;
+
+      for (let i = -addFactor; i < length + addFactor; i += addFactor) {
+        if (hasShipAt(coords + 10 + i) === true) return false;
+        if (hasShipAt(coords - 10 + i) === true) return false;
+      }
+    }
+
+    if (axis === "y") {
+      if (hasShipAt(coords - 10) === true) return false;
+      if (hasShipAt(coords + length + 10) === true) return false;
+
+      for (let i = -addFactor; i < length + addFactor; i += addFactor) {
+        if (hasShipAt(coords + 1 + i) === true) return false;
+        if (hasShipAt(coords - 1 + i) === true) return false;
+      }
+    }
 
     // Placing logic
     const ship = Ship(length);
-    const addFactor = axis === "x" ? 1 : 10;
     const illegalX = {
       10: true,
       20: true,
