@@ -63,5 +63,23 @@ export default function Gameboard() {
     return true;
   };
 
-  return { place, hasShipAt };
+  const receiveAttack = (coords) => {
+    if (board[coords].hit === true) return false;
+    if (board[coords].ship === false) {
+      board[coords].hit = true;
+      return false;
+    }
+    board[coords].ship.hit();
+    board[coords].hit = true;
+    return true;
+  };
+
+  // Filter board by blocks that has ships then stop at the first
+  // ship that reports false and return false (!)
+  const isAllSunk = () =>
+    !board
+      .filter((block) => block.ship !== false)
+      .some((ship) => ship.ship.isSunk() === false);
+
+  return { place, receiveAttack, isAllSunk, hasShipAt };
 }
