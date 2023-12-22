@@ -2,6 +2,7 @@ import Ship from "./ship";
 
 export default function Gameboard() {
   const board = [];
+  const ships = [];
   for (let i = 0; i < 100; i += 1) {
     board.push({
       ship: false,
@@ -79,6 +80,7 @@ export default function Gameboard() {
         return false;
       }
       board[i].ship = ship;
+      ships.push(ship);
     }
     // Placment succseseded
     return true;
@@ -97,10 +99,7 @@ export default function Gameboard() {
 
   // Filter board by blocks that has ships then stop at the first
   // ship that reports false and return false (!)
-  const isAllSunk = () =>
-    !board
-      .filter((block) => block.ship !== false)
-      .some((ship) => ship.ship.isSunk() === false);
+  const isAllSunk = () => !ships.some((ship) => ship.isSunk() === false);
 
   return { place, receiveAttack, isAllSunk, hasShipAt };
 }
