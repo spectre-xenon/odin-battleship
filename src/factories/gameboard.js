@@ -27,28 +27,28 @@ export default function Gameboard() {
 
   const place = (coords, length, axis = "x") => {
     // Guard clauses
-    if (hasShipAt(coords) === undefined) return false;
-    if (hasShipAt(coords) === true) return false;
+    if (hasShipAt(coords) === undefined) return "illegal";
+    if (hasShipAt(coords) === true) return "illegal";
     // Check that the surronding area is empty
     const addFactor = axis === "x" ? 1 : 10;
 
     if (axis === "x") {
-      if (hasShipAt(coords - 1) === true) return false;
-      if (hasShipAt(coords + length + 1) === true) return false;
+      if (hasShipAt(coords - 1) === true) return "illegal";
+      if (hasShipAt(coords + length + 1) === true) return "illegal";
 
       for (let i = -addFactor; i < length + addFactor; i += addFactor) {
-        if (hasShipAt(coords + 10 + i) === true) return false;
-        if (hasShipAt(coords - 10 + i) === true) return false;
+        if (hasShipAt(coords + 10 + i) === true) return "illegal";
+        if (hasShipAt(coords - 10 + i) === true) return "illegal";
       }
     }
 
     if (axis === "y") {
-      if (hasShipAt(coords - 10) === true) return false;
-      if (hasShipAt(coords + length + 10) === true) return false;
+      if (hasShipAt(coords - 10) === true) return "illegal";
+      if (hasShipAt(coords + length + 10) === true) return "illegal";
 
       for (let i = -addFactor; i < length + addFactor; i += addFactor) {
-        if (hasShipAt(coords + 1 + i) === true) return false;
-        if (hasShipAt(coords - 1 + i) === true) return false;
+        if (hasShipAt(coords + 1 + i) === true) return "illegal";
+        if (hasShipAt(coords - 1 + i) === true) return "illegal";
       }
     }
 
@@ -71,30 +71,30 @@ export default function Gameboard() {
     for (let i = coords; i < coords + length * addFactor; i += addFactor) {
       if (axis === "x" && illegalX[i] && i !== coords + length) {
         reversePlacedBlocks(i, coords, addFactor);
-        return false;
+        return "illegal";
       }
 
       if (hasShipAt(i) === true || hasShipAt(i) === undefined) {
         reversePlacedBlocks(i, coords, addFactor);
         // Placment failed
-        return false;
+        return "illegal";
       }
       board[i].ship = ship;
       ships.push(ship);
     }
     // Placment succseseded
-    return true;
+    return "placed";
   };
 
   const receiveAttack = (coords) => {
-    if (board[coords].hit === true) return false;
+    if (board[coords].hit === true) return "illegal";
     if (board[coords].ship === false) {
       board[coords].hit = true;
-      return false;
+      return "miss";
     }
     board[coords].ship.hit();
     board[coords].hit = true;
-    return true;
+    return "hit";
   };
 
   // Filter board by blocks that has ships then stop at the first
