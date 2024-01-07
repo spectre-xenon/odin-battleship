@@ -21,6 +21,8 @@
   font-style: normal;
   line-height: normal;
 
+  overflow: hidden;
+
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -69,6 +71,18 @@ h2 {
   aspect-ratio: 1;
 }
 
+.board .ship {
+  background: var(--ship);
+}
+
+.board .hit {
+  background: var(--hit);
+}
+
+.board .miss {
+  background: var(--miss);
+}
+
 #dialog {
   background: var(--background);
   position: absolute;
@@ -82,6 +96,11 @@ h2 {
   align-items: center;
   gap: 2rem;
   padding-bottom: 8rem;
+}
+
+#dialog:has(#placementControls) {
+  padding-bottom: 0rem;
+  padding-top: 0rem;
 }
 
 #dialog h1 {
@@ -117,4 +136,70 @@ h2 {
 
 #dialog button:hover {
   filter: brightness(110%);
+}
+
+#placementControls {
+  height: 10%;
+  width: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+}
+
+.controlContainer {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.controlButt {
+  cursor: pointer;
+  background: var(--accent);
+  border-radius: 7px;
+  aspect-ratio: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: filter cubic-bezier(0.075, 0.82, 0.165, 1) 0.6s;
+}
+
+.controlButt:hover {
+  filter: brightness(110%);
+}
+
+.controlButt img {
+  width: 80%;
+  height: 80%;
+}
+
+.controlContainer p {
+  flex: 1;
+  text-align: center;
+}
+
+#playButt {
+  cursor: pointer;
+  position: absolute;
+  left: 80%;
+  top: 50%;
+  width: 4%;
+  background: var(--accent);
+  border-radius: 7px;
+  aspect-ratio: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: filter cubic-bezier(0.075, 0.82, 0.165, 1) 0.6s;
+}
+
+#playButt:hover {
+  filter: brightness(110%);
+}
+
+#playButt img {
+  width: 80%;
+  height: 80%;
 }

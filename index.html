@@ -9,18 +9,39 @@
   <body>
     <div class="playingSection">
       <h2 id="playerName">Player</h2>
-      <div class="board"></div>
+      <div id="playerBoard" class="board"></div>
     </div>
     <div id="seperator"></div>
     <div class="playingSection">
       <h2>Computer</h2>
-      <div class="board"></div>
+      <div id="computerBoard" class="board"></div>
     </div>
+
     <div id="dialog">
-      <h1>BattleShip</h1>
-      <input type="text" placeholder="Name..." />
-      <button type="button">Place ships</button>
+      <div id="placementControls">
+        <div class="controlContainer">
+          <div id="rotateButt" class="controlButt">
+            <img src="rotate.svg" alt="rotate" />
+          </div>
+          <p>Rotate</p>
+        </div>
+        <div class="controlContainer">
+          <div id="resetButt" class="controlButt">
+            <img src="reset.svg" alt="reset" />
+          </div>
+          <p>Reset</p>
+        </div>
+      </div>
+
+      <div id="placementBoard" class="board"></div>
+
+      <div id="playButt">
+        <img src="play.svg" alt="play" />
+      </div>
+      <!--<h1>BattleShip</h1>
+      <input id="nameInput" type="text" placeholder="Name..." />
+      <button id="placeShipsButt" type="button">Place ships</button> -->
     </div>
   </body>
-  <script src="/src/index.js"></script>
+  <script type="module" src="/src/index.js"></script>
 </html>
