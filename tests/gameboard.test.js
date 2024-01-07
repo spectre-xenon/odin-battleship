@@ -75,8 +75,8 @@ describe("Placing tests", () => {
   });
 
   test("handles adding to the edges", () => {
-    expect(myGameBoard.place(100, 3, "y")).toBe("illegal");
-    expect(myGameBoard.place(10, 3, "x")).toBe("illegal");
+    expect(myGameBoard.place(99, 3, "y")).toBe("illegal");
+    expect(myGameBoard.place(19, 3, "x")).toBe("illegal");
   });
 });
 

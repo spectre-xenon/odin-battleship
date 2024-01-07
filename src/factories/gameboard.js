@@ -12,7 +12,7 @@ export default function Gameboard() {
 
   const hasShipAt = (coords) => {
     // Illegal placement
-    if (coords > 100 || coords < 0) return undefined;
+    if (coords > 99 || coords < 0) return undefined;
     if (board[coords] === undefined) return undefined;
     // Occupied
     if (board[coords].ship) return true;
@@ -21,6 +21,7 @@ export default function Gameboard() {
 
   const reversePlacedBlocks = (currentCoords, originalCoords, addFactor) => {
     for (let i = currentCoords; i >= originalCoords; i -= addFactor) {
+      if (board[i] === undefined) continue;
       board[i].ship = false;
     }
   };
@@ -55,16 +56,16 @@ export default function Gameboard() {
     // Placing logic
     const ship = Ship(length);
     const illegalX = {
-      10: true,
-      20: true,
-      30: true,
-      40: true,
-      50: true,
-      60: true,
-      70: true,
-      80: true,
-      90: true,
-      100: true,
+      9: true,
+      19: true,
+      29: true,
+      39: true,
+      49: true,
+      59: true,
+      69: true,
+      79: true,
+      89: true,
+      99: true,
     };
 
     // Place ship blocks on board depending the placement is x or y
@@ -101,5 +102,7 @@ export default function Gameboard() {
   // ship that reports false and return false (!)
   const isAllSunk = () => !ships.some((ship) => ship.isSunk() === false);
 
-  return { place, receiveAttack, isAllSunk, hasShipAt };
+  const getBoard = () => board;
+
+  return { place, receiveAttack, isAllSunk, hasShipAt, getBoard };
 }
