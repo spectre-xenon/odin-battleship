@@ -1,5 +1,5 @@
 import { describe, beforeEach, test, expect } from "vitest";
-import Gameboard from "../src/factories/gameboard";
+import Gameboard from "@factories/gameboard";
 
 let myGameBoard;
 beforeEach(() => {

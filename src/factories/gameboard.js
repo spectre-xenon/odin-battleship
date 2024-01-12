@@ -1,4 +1,4 @@
-import Ship from "./ship";
+import Ship from "@factories/ship";
 
 export default function Gameboard() {
   const board = [];

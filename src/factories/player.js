@@ -1,4 +1,4 @@
-import Gameboard from "./gameboard";
+import Gameboard from "@factories/gameboard";
 
 export function Player() {
   const board = Gameboard();

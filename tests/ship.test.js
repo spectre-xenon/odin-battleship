@@ -1,5 +1,5 @@
 import { test, expect } from "vitest";
-import Ship from "../src/factories/ship";
+import Ship from "@factories/ship";
 
 const myShip = Ship(4);
 

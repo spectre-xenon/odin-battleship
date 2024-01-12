@@ -1,5 +1,5 @@
 import { describe, test, expect } from "vitest";
-import { Player, Computer } from "../src/factories/player";
+import { Player, Computer } from "@factories/player";
 import { beforeEach } from "vitest";
 
 describe("Player tests", () => {
