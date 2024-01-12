@@ -11,50 +11,14 @@ export default function Gameboard() {
   }
 
   const hasShipAt = (coords) => {
-    // Illegal placement
-    if (coords > 99 || coords < 0) return undefined;
-    if (board[coords] === undefined) return undefined;
-    // Occupied
     if (board[coords].ship) return true;
     return false;
   };
 
-  const reversePlacedBlocks = (currentCoords, originalCoords, addFactor) => {
-    for (let i = currentCoords; i >= originalCoords; i -= addFactor) {
-      if (board[i] === undefined) continue;
-      board[i].ship = false;
-    }
-  };
-
-  const place = (coords, length, axis = "x") => {
-    // Guard clauses
-    if (hasShipAt(coords) === undefined) return "illegal";
-    if (hasShipAt(coords) === true) return "illegal";
-    // Check that the surronding area is empty
+  const isLegalPlacement = (coords, length, axis) => {
+    // Illegal placement
+    // Illegal ship length outside board placement
     const addFactor = axis === "x" ? 1 : 10;
-
-    if (axis === "x") {
-      if (hasShipAt(coords - 1) === true) return "illegal";
-      if (hasShipAt(coords + length + 1) === true) return "illegal";
-
-      for (let i = -addFactor; i < length + addFactor; i += addFactor) {
-        if (hasShipAt(coords + 10 + i) === true) return "illegal";
-        if (hasShipAt(coords - 10 + i) === true) return "illegal";
-      }
-    }
-
-    if (axis === "y") {
-      if (hasShipAt(coords - 10) === true) return "illegal";
-      if (hasShipAt(coords + length + 10) === true) return "illegal";
-
-      for (let i = -addFactor; i < length + addFactor; i += addFactor) {
-        if (hasShipAt(coords + 1 + i) === true) return "illegal";
-        if (hasShipAt(coords - 1 + i) === true) return "illegal";
-      }
-    }
-
-    // Placing logic
-    const ship = Ship(length);
     const illegalX = {
       9: true,
       19: true,
@@ -68,18 +32,72 @@ export default function Gameboard() {
       99: true,
     };
 
-    // Place ship blocks on board depending the placement is x or y
     for (let i = coords; i < coords + length * addFactor; i += addFactor) {
-      if (axis === "x" && illegalX[i] && i !== coords + length) {
-        reversePlacedBlocks(i, coords, addFactor);
-        return "illegal";
+      if (axis === "x" && illegalX[i] && i !== coords + (length - 1)) {
+        return false;
       }
 
-      if (hasShipAt(i) === true || hasShipAt(i) === undefined) {
-        reversePlacedBlocks(i, coords, addFactor);
-        // Placment failed
-        return "illegal";
+      // Illegal placement
+      if (i > 99 || i < 0) return false;
+      if (board[i] === undefined) return false;
+      // Occupied
+      if (board[i].ship) return false;
+    }
+    // Too close to other ship
+    // if place we checking is not on board skip this check
+
+    if (axis === "x") {
+      // Block before ship
+      if (board[coords - 1] !== undefined && board[coords - 1].ship)
+        return false;
+      // Block after ship
+      if (board[coords + length] !== undefined && board[coords + length].ship)
+        return false;
+
+      for (let i = -addFactor; i < length + addFactor; i += addFactor) {
+        // Blocks above ship
+        if (board[coords + 10 + i] !== undefined && board[coords + 10 + i].ship)
+          return false;
+        // Blocks below ship
+        if (board[coords - 10 + i] !== undefined && board[coords - 10 + i].ship)
+          return false;
       }
+    }
+
+    if (axis === "y") {
+      // Block above ship
+      if (board[coords - 10] !== undefined && board[coords - 10].ship)
+        return false;
+      // Block below ship
+      if (
+        board[coords + length * 10] !== undefined &&
+        board[coords + length * 10].ship
+      )
+        return false;
+
+      for (let i = -addFactor; i < length + addFactor; i += addFactor) {
+        // Blocks right of ship
+        if (board[coords + 1 + i] !== undefined && board[coords + 1 + i].ship)
+          return false;
+        // Blocks left of ship
+        if (board[coords - 1 + i] !== undefined && board[coords - 1 + i].ship)
+          return false;
+      }
+    }
+
+    return true;
+  };
+
+  const place = (coords, length, axis = "x") => {
+    // Guard clauses
+    if (isLegalPlacement(coords, length, axis) === false) return "illegal";
+
+    // Placing logic
+    const addFactor = axis === "x" ? 1 : 10;
+    const ship = Ship(length);
+
+    // Place ship blocks on board depending the placement is x or y
+    for (let i = coords; i < coords + length * addFactor; i += addFactor) {
       board[i].ship = ship;
       ships.push(ship);
     }
@@ -104,5 +122,12 @@ export default function Gameboard() {
 
   const getBoard = () => board;
 
-  return { place, receiveAttack, isAllSunk, hasShipAt, getBoard };
+  return {
+    place,
+    receiveAttack,
+    isAllSunk,
+    isLegalPlacement,
+    hasShipAt,
+    getBoard,
+  };
 }

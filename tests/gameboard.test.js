@@ -8,15 +8,17 @@ beforeEach(() => {
 
 describe("Placing tests", () => {
   test("places a ship on y", () => {
-    expect(myGameBoard.place(50, 2, "y")).toBe("placed");
-    expect(myGameBoard.hasShipAt(60)).toBe(true);
-    expect(myGameBoard.hasShipAt(70)).toBe(false);
+    expect(myGameBoard.place(0, 2, "y")).toBe("placed");
+    expect(myGameBoard.hasShipAt(0)).toBe(true);
+    expect(myGameBoard.hasShipAt(10)).toBe(true);
+    expect(myGameBoard.hasShipAt(2)).toBe(false);
   });
 
   test("places a ship on x", () => {
-    expect(myGameBoard.place(23, 2, "x")).toBe("placed");
-    expect(myGameBoard.hasShipAt(24)).toBe(true);
-    expect(myGameBoard.hasShipAt(25)).toBe(false);
+    expect(myGameBoard.place(0, 2, "x")).toBe("placed");
+    expect(myGameBoard.hasShipAt(0)).toBe(true);
+    expect(myGameBoard.hasShipAt(1)).toBe(true);
+    expect(myGameBoard.hasShipAt(2)).toBe(false);
   });
 
   test("handles illegal placement", () => {
@@ -28,6 +30,11 @@ describe("Placing tests", () => {
     myGameBoard.place(11, 3);
     expect(myGameBoard.place(11, 3)).toBe("illegal");
     expect(myGameBoard.place(12, 3)).toBe("illegal");
+  });
+
+  test("quick test", () => {
+    expect(myGameBoard.isLegalPlacement(18, 2, "x")).toBe(true);
+    expect(myGameBoard.place(18, 2, "x")).toBe("placed");
   });
 
   test("handles placing ships next to other ships", () => {
@@ -77,17 +84,18 @@ describe("Placing tests", () => {
   test("handles adding to the edges", () => {
     expect(myGameBoard.place(99, 3, "y")).toBe("illegal");
     expect(myGameBoard.place(19, 3, "x")).toBe("illegal");
+    expect(myGameBoard.hasShipAt(19)).toBe(false);
   });
 });
 
 describe("receiveAttack tests", () => {
   test("receives attack on ship", () => {
-    myGameBoard.place(1, 3, "x");
-    expect(myGameBoard.receiveAttack(1)).toBe("hit");
+    expect(myGameBoard.place(0, 1, "x")).toBe("placed");
+    expect(myGameBoard.receiveAttack(0)).toBe("hit");
   });
 
   test("receives attack on empty block", () => {
-    myGameBoard.place(1, 3, "x");
+    expect(myGameBoard.place(1, 3, "x")).toBe("placed");
     expect(myGameBoard.receiveAttack(4)).toBe("miss");
   });
 
