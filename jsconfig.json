@@ -6,6 +6,12 @@
       ],
       "@factories/*": [
         "./src/factories/*"
+      ],
+      "@DOM/*": [
+        "./src/DOM/*"
+      ],
+      "@game/*": [
+        "./src/game/*"
       ]
     }
   }

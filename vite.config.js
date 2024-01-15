@@ -14,6 +14,14 @@ export default defineConfig({
           new URL("./src/factories/", import.meta.url),
         ),
       },
+      {
+        find: "@DOM",
+        replacement: fileURLToPath(new URL("./src/DOM/", import.meta.url)),
+      },
+      {
+        find: "@game",
+        replacement: fileURLToPath(new URL("./src/game/", import.meta.url)),
+      },
     ],
   },
 });
