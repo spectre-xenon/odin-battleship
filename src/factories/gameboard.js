@@ -2,7 +2,7 @@ import Ship from "@factories/ship";
 
 export default function Gameboard() {
   const board = [];
-  const ships = [];
+  const shipBlocks = [];
   for (let i = 0; i < 100; i += 1) {
     board.push({
       ship: false,
@@ -54,7 +54,7 @@ export default function Gameboard() {
       if (board[coords + length] !== undefined && board[coords + length].ship)
         return false;
 
-      for (let i = -addFactor; i < length + addFactor; i += addFactor) {
+      for (let i = -addFactor; i <= length * addFactor; i += addFactor) {
         // Blocks above ship
         if (board[coords + 10 + i] !== undefined && board[coords + 10 + i].ship)
           return false;
@@ -75,7 +75,7 @@ export default function Gameboard() {
       )
         return false;
 
-      for (let i = -addFactor; i < length + addFactor; i += addFactor) {
+      for (let i = -addFactor; i <= length * addFactor; i += addFactor) {
         // Blocks right of ship
         if (board[coords + 1 + i] !== undefined && board[coords + 1 + i].ship)
           return false;
@@ -99,7 +99,7 @@ export default function Gameboard() {
     // Place ship blocks on board depending the placement is x or y
     for (let i = coords; i < coords + length * addFactor; i += addFactor) {
       board[i].ship = ship;
-      ships.push(ship);
+      shipBlocks.push(board[i]);
     }
     // Placment succseseded
     return "placed";
@@ -118,11 +118,13 @@ export default function Gameboard() {
 
   // Filter board by blocks that has ships then stop at the first
   // ship that reports false and return false (!)
-  const isAllSunk = () => !ships.some((ship) => ship.isSunk() === false);
+  const isAllSunk = () =>
+    !shipBlocks.some((block) => block.ship.isSunk() === false);
 
   const getBoard = () => board;
 
   return {
+    shipBlocks,
     place,
     receiveAttack,
     isAllSunk,
