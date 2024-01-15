@@ -1,13 +1,14 @@
 import Gameboard from "@factories/gameboard";
 
-export function Player() {
+export function Player(myName = "Player") {
+  const name = myName;
   const board = Gameboard();
 
   let attack = (board, coords) => {
     return board.receiveAttack(coords);
   };
 
-  return { board, attack };
+  return { name, board, attack };
 }
 
 export function Computer() {
