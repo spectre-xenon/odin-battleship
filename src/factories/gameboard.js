@@ -3,12 +3,19 @@ import Ship from "@factories/ship";
 export default function Gameboard() {
   const board = [];
   const shipBlocks = [];
+  let placableShips = [5, 4, 3, 3, 2];
   for (let i = 0; i < 100; i += 1) {
     board.push({
       ship: false,
       hit: false,
     });
   }
+
+  const getPlacableShipLength = () => placableShips[0] ?? 0;
+
+  const shiftPlacableShipLength = () => placableShips.shift();
+
+  const populatePlacableShips = () => (placableShips = [5, 4, 3, 3, 2]);
 
   const hasShipAt = (coords) => {
     if (board[coords].ship) return true;
@@ -31,6 +38,42 @@ export default function Gameboard() {
       89: true,
       99: true,
     };
+    const illegalX_2 = {
+      0: true,
+      10: true,
+      20: true,
+      30: true,
+      40: true,
+      50: true,
+      60: true,
+      70: true,
+      80: true,
+      90: true,
+    };
+    const illegalY = {
+      90: true,
+      91: true,
+      92: true,
+      93: true,
+      94: true,
+      95: true,
+      96: true,
+      97: true,
+      98: true,
+      99: true,
+    };
+    const illegalY_2 = {
+      0: true,
+      1: true,
+      2: true,
+      3: true,
+      4: true,
+      5: true,
+      6: true,
+      7: true,
+      8: true,
+      9: true,
+    };
 
     for (let i = coords; i < coords + length * addFactor; i += addFactor) {
       if (axis === "x" && illegalX[i] && i !== coords + (length - 1)) {
@@ -48,40 +91,87 @@ export default function Gameboard() {
 
     if (axis === "x") {
       // Block before ship
-      if (board[coords - 1] !== undefined && board[coords - 1].ship)
+      if (
+        !illegalX_2[coords] &&
+        board[coords - addFactor] !== undefined &&
+        board[coords - addFactor].ship
+      )
         return false;
       // Block after ship
-      if (board[coords + length] !== undefined && board[coords + length].ship)
+      if (
+        !illegalX[coords + length - addFactor] &&
+        board[coords + length] !== undefined &&
+        board[coords + length].ship
+      )
         return false;
 
-      for (let i = -addFactor; i <= length * addFactor; i += addFactor) {
-        // Blocks above ship
-        if (board[coords + 10 + i] !== undefined && board[coords + 10 + i].ship)
-          return false;
-        // Blocks below ship
-        if (board[coords - 10 + i] !== undefined && board[coords - 10 + i].ship)
-          return false;
+      // Blocks above ship
+      // don't check top if on the top edge
+      if (!illegalY[coords]) {
+        for (let i = -addFactor; i <= length; i += addFactor) {
+          if (illegalX[coords + 10 + i]) break;
+          if (
+            !illegalX[coords + 10 + i] &&
+            board[coords + 10 + i] !== undefined &&
+            board[coords + 10 + i].ship
+          ) {
+            return false;
+          }
+        }
+      }
+
+      // Blocks below ship
+      // don't check bottom if on the bottom edge
+      if (!illegalY_2[coords]) {
+        for (let i = -addFactor; i <= length * addFactor; i += addFactor) {
+          if (illegalX[coords - 10 + i]) break;
+          if (
+            board[coords - 10 + i] !== undefined &&
+            board[coords - 10 + i].ship
+          )
+            return false;
+        }
       }
     }
 
     if (axis === "y") {
       // Block above ship
-      if (board[coords - 10] !== undefined && board[coords - 10].ship)
+      if (
+        board[coords - addFactor] !== undefined &&
+        board[coords - addFactor].ship
+      )
         return false;
       // Block below ship
       if (
-        board[coords + length * 10] !== undefined &&
-        board[coords + length * 10].ship
+        board[coords + length * addFactor] !== undefined &&
+        board[coords + length * addFactor].ship
       )
         return false;
 
-      for (let i = -addFactor; i <= length * addFactor; i += addFactor) {
-        // Blocks right of ship
-        if (board[coords + 1 + i] !== undefined && board[coords + 1 + i].ship)
-          return false;
-        // Blocks left of ship
-        if (board[coords - 1 + i] !== undefined && board[coords - 1 + i].ship)
-          return false;
+      // Blocks left of ship
+      // don't check left if on the left edge
+      if (!illegalX_2[coords]) {
+        for (let i = -addFactor; i <= length * addFactor; i += addFactor) {
+          if (
+            board[coords - 1 + i] !== undefined &&
+            board[coords - 1 + i].ship
+          ) {
+            return false;
+          }
+        }
+      }
+
+      // Blocks right of ship
+      // don't check right if on the right edge
+      if (!illegalX[coords]) {
+        for (let i = -addFactor; i <= length * addFactor; i += addFactor) {
+          if (
+            board[coords + 1 + i] !== undefined &&
+            board[coords + 1 + i].ship
+          ) {
+            return false;
+          }
+        }
       }
     }
 
@@ -124,6 +214,9 @@ export default function Gameboard() {
   const getBoard = () => board;
 
   return {
+    getPlacableShipLength,
+    shiftPlacableShipLength,
+    populatePlacableShips,
     shipBlocks,
     place,
     receiveAttack,
