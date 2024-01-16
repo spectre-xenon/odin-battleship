@@ -197,13 +197,13 @@ export default function Gameboard() {
 
   const receiveAttack = (coords) => {
     if (board[coords].hit === true) return "illegal";
-    if (board[coords].ship === false) {
+    if (board[coords].ship) {
+      board[coords].ship.hit();
       board[coords].hit = true;
-      return "miss";
+      return "hit";
     }
-    board[coords].ship.hit();
     board[coords].hit = true;
-    return "hit";
+    return "miss";
   };
 
   // Filter board by blocks that has ships then stop at the first
@@ -212,6 +212,8 @@ export default function Gameboard() {
     !shipBlocks.some((block) => block.ship.isSunk() === false);
 
   const getBoard = () => board;
+
+  const getBlock = (block) => board[block];
 
   return {
     getPlacableShipLength,
@@ -224,5 +226,6 @@ export default function Gameboard() {
     isLegalPlacement,
     hasShipAt,
     getBoard,
+    getBlock,
   };
 }

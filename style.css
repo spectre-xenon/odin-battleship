@@ -203,3 +203,24 @@ h2 {
   width: 80%;
   height: 80%;
 }
+
+#winScreen {
+  display: none;
+  background: var(--background);
+  position: absolute;
+  left: 90px;
+  top: 136px;
+
+  width: 1356px;
+  height: 550px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 60px;
+
+  background: black;
+  background: rgba(17, 17, 27, 0.8);
+  backdrop-filter: blur(4px);
+
+  z-index: 1000;
+}

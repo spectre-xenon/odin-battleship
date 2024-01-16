@@ -19,7 +19,7 @@
 
     <div id="dialog">
       <h1>BattleShip</h1>
-      <input id="nameInput" type="text" placeholder="Name..." />
+      <input id="nameInput" type="text" maxlength="30" placeholder="Name..." />
       <button id="placeShipsButt" type="button">Place ships</button>
     </div>
 
@@ -45,6 +45,13 @@
         <img src="play.svg" alt="play" />
       </div>
     </template>
+
+    <div id="winScreen">
+      <h1 id="winHeader">YOU WIN!</h1>
+      <div id="resetGame" class="controlButt">
+        <img src="reset.svg" alt="reset" />
+      </div>
+    </div>
   </body>
   <script type="module" src="/src/index.js"></script>
 </html>
