@@ -20,8 +20,8 @@ export function Game() {
     const isPlayerWon = computer.board.isAllSunk();
     const isComputerWon = player.board.isAllSunk();
     if (isPlayerWon) return "player";
-    else if (isComputerWon) return "computer";
-    else return "none";
+    if (isComputerWon) return "computer";
+    return "none";
   };
 
   const playComputer = () => computer.attack(player.board);

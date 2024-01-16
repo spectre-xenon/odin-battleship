@@ -4,9 +4,7 @@ export function Player(myName = "Player") {
   const name = myName;
   const board = Gameboard();
 
-  let attack = (board, coords) => {
-    return board.receiveAttack(coords);
-  };
+  const attack = (boardToAttack, coords) => boardToAttack.receiveAttack(coords);
 
   return { name, board, attack };
 }
@@ -29,12 +27,12 @@ export function Computer() {
     }
   };
 
-  const attack = (board) => {
+  const attack = (boardToAttack) => {
     let randomCoords = Math.floor(Math.random() * 99);
     let condition = true;
     let attack;
     while (condition) {
-      attack = board.receiveAttack(randomCoords);
+      attack = boardToAttack.receiveAttack(randomCoords);
       if (attack === "illegal") randomCoords = Math.floor(Math.random() * 99);
       else condition = false;
     }

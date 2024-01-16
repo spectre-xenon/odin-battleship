@@ -10,6 +10,29 @@ export function renderPlayerBoard(board) {
     boardDiv.appendChild(blockElement);
   });
 }
+
+function toggleWonScreen(text) {
+  const winScreen = document.getElementById("winScreenContainer");
+  const winHeader = document.getElementById("winHeader");
+  const resetButt = document.getElementById("resetGame");
+
+  if (text === "player") winHeader.textContent = "YOU WIN!";
+  else if (text === "computer") winHeader.textContent = "COMPUTER WINS!";
+
+  resetButt.addEventListener("click", () => {
+    window.location.reload();
+  });
+
+  winScreen.style.display = "flex";
+}
+
+function checkWin(game) {
+  const isWon = game.isWon();
+  if (isWon === "none") return console.log("zeeeewwwww");
+  if (isWon === "player") return toggleWonScreen("player");
+  return toggleWonScreen("computer");
+}
+
 export function renderComputerBoard(game) {
   const boardDiv = document.getElementById("computerBoard");
   boardDiv.textContent = "";
@@ -29,7 +52,7 @@ export function renderComputerBoard(game) {
 
       const [blockIndex, computerAttack] = game.playComputer();
       const playerBlockElement = document.querySelector(
-        `#playerBoard .block[data-index = '${blockIndex}']`,
+        `#playerBoard .block[data-index = '${blockIndex}']`
       );
       if (computerAttack === "hit") playerBlockElement.classList.add("hit");
       else if (computerAttack === "miss")
@@ -42,26 +65,4 @@ export function renderComputerBoard(game) {
 
     boardDiv.appendChild(blockElement);
   });
-}
-
-function checkWin(game) {
-  const isWon = game.isWon();
-  if (isWon === "none") return console.log("zeeeewwwww");
-  if (isWon === "player") return toggleWonScreen("player");
-  if (isWon === "computer") return toggleWonScreen("computer");
-}
-
-function toggleWonScreen(text) {
-  const winScreen = document.getElementById("winScreenContainer");
-  const winHeader = document.getElementById("winHeader");
-  const resetButt = document.getElementById("resetGame");
-
-  if (text === "player") winHeader.textContent = "YOU WIN!";
-  else if (text === "computer") winHeader.textContent = "COMPUTER WINS!";
-
-  resetButt.addEventListener("click", () => {
-    window.location.reload();
-  });
-
-  winScreen.style.display = "flex";
 }

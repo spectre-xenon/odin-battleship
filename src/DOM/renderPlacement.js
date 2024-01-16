@@ -1,3 +1,4 @@
+/* eslint no-use-before-define: "off" */
 let axisX = true;
 
 export function renderPlacementBarebones(board) {
@@ -78,7 +79,7 @@ function addPlacementEventListener(board, block, index, blockElements) {
     for (let i = coords; i < coords + length * addFactor; i += addFactor) {
       if (board.hasShipAt(i)) return;
       const currentElement = document.querySelector(
-        `.block[data-index = "${i}"]`,
+        `.block[data-index = "${i}"]`
       );
       if (isLegalPlacement) {
         currentElement.classList.add("ship");
@@ -98,7 +99,7 @@ function addPlacementEventListener(board, block, index, blockElements) {
     for (let i = coords; i < coords + length * addFactor; i += addFactor) {
       if (board.hasShipAt(i)) return;
       const currentElement = document.querySelector(
-        `.block[data-index = "${i}"]`,
+        `.block[data-index = "${i}"]`
       );
       currentElement.classList.remove("ship");
       currentElement.classList.remove("hit");

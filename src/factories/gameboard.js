@@ -38,7 +38,7 @@ export default function Gameboard() {
       89: true,
       99: true,
     };
-    const illegalX_2 = {
+    const illegalX2 = {
       0: true,
       10: true,
       20: true,
@@ -62,7 +62,7 @@ export default function Gameboard() {
       98: true,
       99: true,
     };
-    const illegalY_2 = {
+    const illegalY2 = {
       0: true,
       1: true,
       2: true,
@@ -92,7 +92,7 @@ export default function Gameboard() {
     if (axis === "x") {
       // Block before ship
       if (
-        !illegalX_2[coords] &&
+        !illegalX2[coords] &&
         board[coords - addFactor] !== undefined &&
         board[coords - addFactor].ship
       )
@@ -122,7 +122,7 @@ export default function Gameboard() {
 
       // Blocks below ship
       // don't check bottom if on the bottom edge
-      if (!illegalY_2[coords]) {
+      if (!illegalY2[coords]) {
         for (let i = -addFactor; i <= length * addFactor; i += addFactor) {
           if (illegalX[coords - 10 + i]) break;
           if (
@@ -150,7 +150,7 @@ export default function Gameboard() {
 
       // Blocks left of ship
       // don't check left if on the left edge
-      if (!illegalX_2[coords]) {
+      if (!illegalX2[coords]) {
         for (let i = -addFactor; i <= length * addFactor; i += addFactor) {
           if (
             board[coords - 1 + i] !== undefined &&
