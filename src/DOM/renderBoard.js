@@ -28,7 +28,7 @@ function toggleWonScreen(text) {
 
 function checkWin(game) {
   const isWon = game.isWon();
-  if (isWon === "none") return console.log("zeeeewwwww");
+  if (isWon === "none") return null;
   if (isWon === "player") return toggleWonScreen("player");
   return toggleWonScreen("computer");
 }

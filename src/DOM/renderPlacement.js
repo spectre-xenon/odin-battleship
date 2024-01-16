@@ -69,7 +69,7 @@ function addPlacementEventListener(board, block, index, blockElements) {
     99: true,
   };
 
-  blockElement.addEventListener("mouseover", (ev) => {
+  blockElement.addEventListener("mouseover", () => {
     if (board.getPlacableShipLength() === 0) return;
     if (block.ship) return;
     const length = board.getPlacableShipLength();
@@ -90,7 +90,7 @@ function addPlacementEventListener(board, block, index, blockElements) {
     }
   });
 
-  blockElement.addEventListener("mouseout", (ev) => {
+  blockElement.addEventListener("mouseout", () => {
     if (board.getPlacableShipLength() === 0) return;
     if (block.ship) return;
     const length = board.getPlacableShipLength();
@@ -108,7 +108,7 @@ function addPlacementEventListener(board, block, index, blockElements) {
     }
   });
 
-  blockElement.addEventListener("mousedown", (ev) => {
+  blockElement.addEventListener("mousedown", () => {
     if (board.getPlacableShipLength() === 0) return;
     if (block.ship) return;
     const length = board.getPlacableShipLength();
