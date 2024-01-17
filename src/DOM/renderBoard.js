@@ -52,9 +52,9 @@ function checkWin(game) {
 }
 
 function toggleWonScreen(text) {
-  const winScreen = document.getElementById("winScreen");
+  const winScreen = document.getElementById("winScreenContainer");
   const winHeader = document.getElementById("winHeader");
-  const resetButt = document.getElementById("resetButt");
+  const resetButt = document.getElementById("resetGame");
 
   if (text === "player") winHeader.textContent = "YOU WIN!";
   else if (text === "computer") winHeader.textContent = "COMPUTER WINS!";
