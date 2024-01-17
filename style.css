@@ -71,6 +71,14 @@ h2 {
   aspect-ratio: 1;
 }
 
+#computerBoard .block {
+  cursor: pointer;
+}
+
+#computerBoard .block:hover {
+  filter: brightness(110%);
+}
+
 .board .ship {
   background: var(--ship);
 }
@@ -79,8 +87,17 @@ h2 {
   background: var(--hit);
 }
 
+#computerBoard .hit {
+  cursor: not-allowed;
+}
+
 .board .miss {
+  cursor: not-allowed;
   background: var(--miss);
+}
+
+#computerBoard .miss {
+  cursor: not-allowed;
 }
 
 #dialog {
@@ -204,15 +221,23 @@ h2 {
   height: 80%;
 }
 
-#winScreen {
+#winScreenContainer {
   display: none;
-  background: var(--background);
+  background: none;
   position: absolute;
-  left: 90px;
-  top: 136px;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
 
-  width: 1356px;
-  height: 550px;
+#winScreen {
+  background: var(--background);
+  width: 90%;
+  height: 90%;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
